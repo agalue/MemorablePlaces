@@ -17,6 +17,7 @@ class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMan
 
     var managedObjectContext: NSManagedObjectContext!
     var locationManager = CLLocationManager()
+    var selectedPoint: MKPointAnnotation!
 
     @IBAction func cancel(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
@@ -25,18 +26,25 @@ class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     @IBAction func save(sender: AnyObject) {
         let name = nameText.text
         
+        if selectedPoint == nil {
+            // Show Alert View
+            showAlertWithTitle("Warning", message: "Your place needs a coordinate. Long press on the map to select a place.", cancelButtonTitle: "OK")
+            return
+        }
+        
         if let isEmpty = name?.isEmpty where isEmpty == false {
             // Create Entity
-            print(self.managedObjectContext)
             let entity = NSEntityDescription.entityForName("Place", inManagedObjectContext: self.managedObjectContext)
-            print(entity)
             
             // Initialize Record
             let record = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: self.managedObjectContext)
             
             // Populate Record
             record.setValue(name, forKey: "name")
-            
+            record.setValue(selectedPoint.coordinate.latitude, forKey: "latitude")
+            record.setValue(selectedPoint.coordinate.longitude, forKey: "longitude")
+            record.setValue(selectedPoint.subtitle, forKey: "address")
+
             do {
                 // Save Record
                 try record.managedObjectContext?.save()
@@ -63,10 +71,40 @@ class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        
+        let uilpgr = UILongPressGestureRecognizer(target: self, action: "action:") // The colon is for receiving the gesture recognizer object
+        uilpgr.minimumPressDuration = 2
+        mapView.addGestureRecognizer(uilpgr)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+
+    func action(gestureRecognizer:UIGestureRecognizer) {
+        let touchPoint = gestureRecognizer.locationInView(self.mapView)
+        let coordinate: CLLocationCoordinate2D = mapView.convertPoint(touchPoint, toCoordinateFromView: self.mapView)
+        
+        if (selectedPoint != nil) {
+            mapView.removeAnnotation(selectedPoint)
+        }
+        selectedPoint = MKPointAnnotation()
+        selectedPoint.coordinate = coordinate
+        selectedPoint.title = "Your Place!"
+        selectedPoint.subtitle = "Calculating address..."
+        mapView.addAnnotation(selectedPoint)
+        
+        let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        CLGeocoder().reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+            if let e = error {
+                print("Reverse geocoder failed with error " + e.localizedDescription)
+                return
+            }
+            if let placemark = placemarks?[0] {
+                let addressFields = placemark.addressDictionary!["FormattedAddressLines"] as! [String]
+                self.selectedPoint.subtitle = addressFields.joinWithSeparator(", ")
+            }
+        })
     }
 
     private func showAlertWithTitle(title: String, message: String, cancelButtonTitle: String) {
