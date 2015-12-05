@@ -14,9 +14,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Fetch Main Storyboard
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        // Instantiate Root Navigation Controller
+        let rootNavigationController = mainStoryboard.instantiateViewControllerWithIdentifier("root") as!UINavigationController
+        
+        // Configure View Controller
+        let viewController = rootNavigationController.topViewController as? TableViewController
+        
+        if let vc = viewController {
+            vc.managedObjectContext = self.managedObjectContext
+        }
+        
+        // Configure Window
+        window?.rootViewController = rootNavigationController
+        
         return true
     }
 
@@ -28,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        self.saveContext()
     }
 
     func applicationWillEnterForeground(application: UIApplication) {

@@ -8,22 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		0C0E92371C0E4E5E0020717F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0E92361C0E4E5E0020717F /* AppDelegate.swift */; };
-		0C0E92391C0E4E5E0020717F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0E92381C0E4E5E0020717F /* ViewController.swift */; };
+		0C0E92391C0E4E5E0020717F /* AddPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0E92381C0E4E5E0020717F /* AddPlaceViewController.swift */; };
 		0C0E923C1C0E4E5E0020717F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C0E923A1C0E4E5E0020717F /* Main.storyboard */; };
 		0C0E923F1C0E4E5E0020717F /* MemorablePlaces.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0C0E923D1C0E4E5E0020717F /* MemorablePlaces.xcdatamodeld */; };
 		0C0E92411C0E4E5E0020717F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C0E92401C0E4E5E0020717F /* Assets.xcassets */; };
 		0C0E92441C0E4E5E0020717F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C0E92421C0E4E5E0020717F /* LaunchScreen.storyboard */; };
+		0C0E924E1C0E50A50020717F /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0E924D1C0E50A50020717F /* TableViewController.swift */; };
+		0C711A5E1C1348B700BBEC43 /* PlaceViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C711A5D1C1348B700BBEC43 /* PlaceViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0C0E92331C0E4E5E0020717F /* MemorablePlaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemorablePlaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C0E92361C0E4E5E0020717F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0C0E92381C0E4E5E0020717F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0C0E92381C0E4E5E0020717F /* AddPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceViewController.swift; sourceTree = "<group>"; };
 		0C0E923B1C0E4E5E0020717F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0C0E923E1C0E4E5E0020717F /* MemorablePlaces.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MemorablePlaces.xcdatamodel; sourceTree = "<group>"; };
 		0C0E92401C0E4E5E0020717F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0C0E92431C0E4E5E0020717F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0C0E92451C0E4E5E0020717F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0C0E924D1C0E50A50020717F /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		0C711A5D1C1348B700BBEC43 /* PlaceViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +61,9 @@
 			isa = PBXGroup;
 			children = (
 				0C0E92361C0E4E5E0020717F /* AppDelegate.swift */,
-				0C0E92381C0E4E5E0020717F /* ViewController.swift */,
+				0C0E92381C0E4E5E0020717F /* AddPlaceViewController.swift */,
+				0C711A5D1C1348B700BBEC43 /* PlaceViewCell.swift */,
+				0C0E924D1C0E50A50020717F /* TableViewController.swift */,
 				0C0E923A1C0E4E5E0020717F /* Main.storyboard */,
 				0C0E92401C0E4E5E0020717F /* Assets.xcassets */,
 				0C0E92421C0E4E5E0020717F /* LaunchScreen.storyboard */,
@@ -138,9 +144,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C0E92391C0E4E5E0020717F /* ViewController.swift in Sources */,
+				0C711A5E1C1348B700BBEC43 /* PlaceViewCell.swift in Sources */,
+				0C0E92391C0E4E5E0020717F /* AddPlaceViewController.swift in Sources */,
 				0C0E923F1C0E4E5E0020717F /* MemorablePlaces.xcdatamodeld in Sources */,
 				0C0E92371C0E4E5E0020717F /* AppDelegate.swift in Sources */,
+				0C0E924E1C0E50A50020717F /* TableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +296,7 @@
 				0C0E924A1C0E4E5E0020717F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
