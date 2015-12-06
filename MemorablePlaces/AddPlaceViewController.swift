@@ -40,10 +40,7 @@ class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMan
             let record = Place(entity: entity!, insertIntoManagedObjectContext: self.managedObjectContext)
             
             // Populate Record
-            record.name = name!
-            record.latitude = selectedPoint.coordinate.latitude
-            record.longitude = selectedPoint.coordinate.longitude
-            record.address = selectedPoint.subtitle!
+            record.updateFromPointAnnotation(selectedPoint)
 
             do {
                 // Save Record
@@ -117,6 +114,19 @@ class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMan
                 self.selectedPoint.subtitle = addressFields.joinWithSeparator(", ")
             }
         })
+    }
+
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let userLocation: CLLocation = locations[0]
+        let latitude = userLocation.coordinate.latitude
+        let longitude = userLocation.coordinate.longitude
+        
+        let latDelta:CLLocationDegrees = 0.005
+        let lonDelta:CLLocationDegrees = 0.005
+        let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
+        let location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
+        let region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
+        self.mapView.setRegion(region, animated: true)
     }
 
     private func showAlertWithTitle(title: String, message: String, cancelButtonTitle: String) {

@@ -24,15 +24,23 @@ class MapViewController: UIViewController {
         do {
             // Get all places
             let places = try managedObjectContext.executeFetchRequest(request)
-            
+
+            var rect: MKMapRect = MKMapRectNull
+
             // Add a point on the map for each place
             for place in places as! [Place] {
-                let point = MKPointAnnotation()
-                point.coordinate = CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude)
-                point.title = place.name
-                point.subtitle = place.address
-                mapView.addAnnotation(point)
+                let annotation = place.getPointAnnotation()
+                mapView.addAnnotation(annotation)
+                // Update region boundaries
+                let point: MKMapPoint = MKMapPointForCoordinate(annotation.coordinate)
+                rect = MKMapRectUnion(rect, MKMapRectMake(point.x, point.y, 0, 0))
             }
+                        
+            // Set map region
+            var region = MKCoordinateRegionForMapRect(rect)
+            region.span.longitudeDelta *= 2; // Margin
+            region.span.latitudeDelta *= 2; // Margin
+            mapView.setRegion(mapView.regionThatFits(region), animated: true)
         } catch {
             print("\(error)")
         }

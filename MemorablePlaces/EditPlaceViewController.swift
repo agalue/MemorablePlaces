@@ -35,10 +35,7 @@ class EditPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMa
         
         if let isEmpty = name?.isEmpty where isEmpty == false {
             // Populate Record
-            place.name = name!
-            place.latitude = selectedPoint.coordinate.latitude
-            place.longitude = selectedPoint.coordinate.longitude
-            place.address = selectedPoint.subtitle!
+            place.updateFromPointAnnotation(selectedPoint)
             
             do {
                 // Save Record
@@ -73,15 +70,17 @@ class EditPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMa
         uilpgr.minimumPressDuration = 2
         mapView.addGestureRecognizer(uilpgr)
         
-        // Add the current place on the map
-        selectedPoint = MKPointAnnotation()
-        selectedPoint.coordinate = CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude)
-        selectedPoint.title = place.name
-        selectedPoint.subtitle = place.address
+        // Update View
+        nameText.text = place.name
+        selectedPoint = place.getPointAnnotation()
         mapView.addAnnotation(selectedPoint)
         
-        // Update label
-        nameText.text = place.name
+        // Set Map Region
+        let latDelta:CLLocationDegrees = 0.005
+        let lonDelta:CLLocationDegrees = 0.005
+        let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
+        let region:MKCoordinateRegion = MKCoordinateRegionMake(selectedPoint.coordinate, span)
+        mapView.setRegion(region, animated: true)
     }
 
     // Long press gesture handler
