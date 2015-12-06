@@ -42,7 +42,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IYN-2P-ki2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1546" y="-664"/>
+            <point key="canvasLocation" x="1392" y="-325"/>
         </scene>
         <!--Places-->
         <scene sceneID="A2k-hE-Q1I">
@@ -114,7 +114,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="yOo-nc-xys" userLabel="Add">
                             <connections>
-                                <segue destination="BYZ-38-t0r" kind="show" identifier="segueAddPlaceViewController" id="LNn-4s-cGc"/>
+                                <segue destination="495-Jz-F4V" kind="show" identifier="segueAddPlaceViewController" id="js4-Cn-ZEX"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -127,7 +127,7 @@
             </objects>
             <point key="canvasLocation" x="635" y="-325"/>
         </scene>
-        <!--Edit Place-->
+        <!--Add/Edit Place-->
         <scene sceneID="LIy-o3-VOY">
             <objects>
                 <viewController id="495-Jz-F4V" customClass="EditPlaceViewController" customModule="MemorablePlaces" customModuleProvider="target" sceneMemberID="viewController">
@@ -165,7 +165,7 @@
                             <constraint firstItem="7jt-DU-tfL" firstAttribute="leading" secondItem="eyE-GJ-Ocm" secondAttribute="leadingMargin" id="vFQ-p3-4Ki"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Edit Place" id="Qc6-AC-n7n">
+                    <navigationItem key="navigationItem" title="Add/Edit Place" id="Qc6-AC-n7n">
                         <barButtonItem key="backBarButtonItem" title="Back" id="wx2-FX-ppu"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="PFS-jS-pi1">
                             <connections>
@@ -200,61 +200,8 @@
             </objects>
             <point key="canvasLocation" x="-185" y="-325"/>
         </scene>
-        <!--Add Place-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController id="BYZ-38-t0r" customClass="AddPlaceViewController" customModule="MemorablePlaces" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="yXC-Mj-2Bk">
-                                <rect key="frame" x="0.0" y="121" width="600" height="479"/>
-                                <animations/>
-                            </mapView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name of the Place" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S6l-rs-Gmo">
-                                <rect key="frame" x="20" y="83" width="565" height="30"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="yGI-aa-iVk"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                        </subviews>
-                        <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="yXC-Mj-2Bk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="1Am-bD-mOB"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="yXC-Mj-2Bk" secondAttribute="bottom" id="1WR-mA-Gzm"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="yXC-Mj-2Bk" secondAttribute="trailing" constant="-20" id="JJh-sz-nC3"/>
-                            <constraint firstItem="S6l-rs-Gmo" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="19" id="Weg-mq-snk"/>
-                            <constraint firstItem="S6l-rs-Gmo" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="oum-xc-5ZM"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="S6l-rs-Gmo" secondAttribute="trailing" constant="-5" id="ukQ-Nv-tG9"/>
-                            <constraint firstItem="yXC-Mj-2Bk" firstAttribute="top" secondItem="S6l-rs-Gmo" secondAttribute="bottom" constant="8" id="zRC-t3-YEa"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Add Place" id="c01-5t-QWp">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="LZb-MT-Aqp"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="vx1-gc-r8D">
-                            <connections>
-                                <action selector="save:" destination="BYZ-38-t0r" id="hVL-sq-Ui4"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <connections>
-                        <outlet property="mapView" destination="yXC-Mj-2Bk" id="1iy-Cs-FbH"/>
-                        <outlet property="nameText" destination="S6l-rs-Gmo" id="VJ3-Mb-zlY"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1546" y="31"/>
-        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="js4-Cn-ZEX"/>
+    </inferredMetricsTieBreakers>
 </document>

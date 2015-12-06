@@ -21,16 +21,14 @@ class Place: NSManagedObject {
     internal func getPointAnnotation() -> MKPointAnnotation {
         let point = MKPointAnnotation()
         point.coordinate = CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
-        point.title = self.name
-        point.subtitle = self.address
+        point.title = self.address
         return point
     }
     
     internal func updateFromPointAnnotation(pointAnnotation: MKPointAnnotation) {
-        self.name = pointAnnotation.title!
         self.latitude = pointAnnotation.coordinate.latitude
         self.longitude = pointAnnotation.coordinate.longitude
-        self.address = pointAnnotation.subtitle!
+        self.address = pointAnnotation.title!
     }
     
 }

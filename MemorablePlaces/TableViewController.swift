@@ -19,7 +19,7 @@ class TableViewController: UITableViewController, NSFetchedResultsControllerDele
         super.viewDidLoad()
         
         // Initialize Fetched Results Controller
-        if (fetchedResultsController == nil) {
+        if fetchedResultsController == nil {
             initalizeFetchedResultsController()
         }
         
@@ -115,28 +115,32 @@ class TableViewController: UITableViewController, NSFetchedResultsControllerDele
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         switch (type) {
-        case .Insert:
-            if let indexPath = newIndexPath {
-                tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-            }
-            break;
-        case .Delete:
-            if let indexPath = indexPath {
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-            }
-            break;
         case .Update:
             if let indexPath = indexPath {
+                print("Updating row at \(indexPath.row)")
                 let cell = tableView.cellForRowAtIndexPath(indexPath) as! PlaceViewCell
                 configureCell(cell, atIndexPath: indexPath)
+                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            }
+            break;
+        case .Insert:
+            if let indexPath = newIndexPath {
+                print("Inserting row at \(indexPath.row)")
+                tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
             }
             break;
         case .Move:
             if let indexPath = indexPath {
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                if let newIndexPath = newIndexPath {
+                    print("Moving row from \(indexPath.row) to \(newIndexPath.row)")
+                    tableView.moveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)
+                }
             }
-            if let newIndexPath = newIndexPath {
-                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Fade)
+            break;
+        case .Delete:
+            if let indexPath = indexPath {
+                print("Deleting row at \(indexPath.row)")
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
             }
             break;
         }
@@ -144,7 +148,8 @@ class TableViewController: UITableViewController, NSFetchedResultsControllerDele
     
     func configureCell(cell: PlaceViewCell, atIndexPath indexPath: NSIndexPath) {
         // Fetch Record
-        let place = fetchedResultsController.objectAtIndexPath(indexPath) as! Place        
+        let place = fetchedResultsController.objectAtIndexPath(indexPath) as! Place
+        print("Configuring cell for \(place.name)")
         // Update Cell
         cell.update(place)
     }
@@ -156,7 +161,7 @@ class TableViewController: UITableViewController, NSFetchedResultsControllerDele
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "segueAddPlaceViewController" {
-            if let viewController = segue.destinationViewController as? AddPlaceViewController {
+            if let viewController = segue.destinationViewController as? EditPlaceViewController {
                 viewController.managedObjectContext = self.managedObjectContext
             }
         }
