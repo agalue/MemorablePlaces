@@ -15,10 +15,9 @@ class EditPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMa
     @IBOutlet weak var nameText: UITextField!
     @IBOutlet weak var mapView: MKMapView!
     
-    var managedObjectContext: NSManagedObjectContext!
     var place: Place!
-    var locationManager = CLLocationManager()
-    var selectedPoint: MKPointAnnotation!    
+    var managedObjectContext: NSManagedObjectContext!
+    var selectedPoint: MKPointAnnotation!
     
     @IBAction func save(sender: AnyObject) {
         let name = nameText.text
@@ -54,13 +53,7 @@ class EditPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Initialize location Manager
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        
+                
         // Configure long press gesture
         let uilpgr = UILongPressGestureRecognizer(target: self, action: "action:") // The colon is for receiving the gesture recognizer object
         uilpgr.minimumPressDuration = 2

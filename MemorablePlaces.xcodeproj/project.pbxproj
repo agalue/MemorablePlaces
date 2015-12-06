@@ -17,6 +17,8 @@
 		0C43F8981C14870A00A5496E /* EditPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C43F8971C14870A00A5496E /* EditPlaceViewController.swift */; };
 		0C43F89A1C148BF300A5496E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C43F8991C148BF300A5496E /* MapViewController.swift */; };
 		0C43F89C1C1495D300A5496E /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C43F89B1C1495D300A5496E /* Place.swift */; };
+		0C66DDE21C14D0C000F0727E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C66DDE11C14D0C000F0727E /* CoreLocation.framework */; };
+		0C66DDE41C14D0C800F0727E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C66DDE31C14D0C800F0727E /* CoreData.framework */; };
 		0C711A5E1C1348B700BBEC43 /* PlaceViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C711A5D1C1348B700BBEC43 /* PlaceViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +35,8 @@
 		0C43F8971C14870A00A5496E /* EditPlaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPlaceViewController.swift; sourceTree = "<group>"; };
 		0C43F8991C148BF300A5496E /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		0C43F89B1C1495D300A5496E /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		0C66DDE11C14D0C000F0727E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		0C66DDE31C14D0C800F0727E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		0C711A5D1C1348B700BBEC43 /* PlaceViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -41,6 +45,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C66DDE41C14D0C800F0727E /* CoreData.framework in Frameworks */,
+				0C66DDE21C14D0C000F0727E /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,6 +56,8 @@
 		0C0E922A1C0E4E5E0020717F = {
 			isa = PBXGroup;
 			children = (
+				0C66DDE31C14D0C800F0727E /* CoreData.framework */,
+				0C66DDE11C14D0C000F0727E /* CoreLocation.framework */,
 				0C0E92351C0E4E5E0020717F /* MemorablePlaces */,
 				0C0E92341C0E4E5E0020717F /* Products */,
 			);

@@ -16,7 +16,7 @@ class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     @IBOutlet weak var mapView: MKMapView!
 
     var managedObjectContext: NSManagedObjectContext!
-    var locationManager = CLLocationManager()
+    var locationManager: CLLocationManager!
     var selectedPoint: MKPointAnnotation!
     
     @IBAction func save(sender: AnyObject) {
@@ -61,6 +61,7 @@ class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         super.viewDidLoad()
         
         // Initialize location Manager
+        locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
@@ -114,14 +115,11 @@ class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMan
 
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation: CLLocation = locations[0]
-        let latitude = userLocation.coordinate.latitude
-        let longitude = userLocation.coordinate.longitude
         
         let latDelta:CLLocationDegrees = 0.005
         let lonDelta:CLLocationDegrees = 0.005
         let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
-        let location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
-        let region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
+        let region:MKCoordinateRegion = MKCoordinateRegionMake(userLocation.coordinate, span)
         self.mapView.setRegion(region, animated: true)
         self.locationManager.stopUpdatingLocation()
     }
