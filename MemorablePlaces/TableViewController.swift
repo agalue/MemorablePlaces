@@ -19,12 +19,8 @@ class TableViewController: UITableViewController, NSFetchedResultsControllerDele
         super.viewDidLoad()
         
         // Initialize Fetched Results Controller
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: allPlacesFetchRequest(), managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
-        fetchedResultsController.delegate = self
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            print("\(error)")
+        if (fetchedResultsController == nil) {
+            initalizeFetchedResultsController()
         }
         
         // Uncomment the following line to preserve selection between presentations
@@ -32,6 +28,16 @@ class TableViewController: UITableViewController, NSFetchedResultsControllerDele
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    func initalizeFetchedResultsController() {
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: allPlacesFetchRequest(), managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = self
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print("\(error)")
+        }
     }
     
     // Initialize Fetch Request

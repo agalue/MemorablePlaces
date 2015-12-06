@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreData
 
-class EditPlaceViewController: UIViewController {
+class EditPlaceViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var nameText: UITextField!
     @IBOutlet weak var mapView: MKMapView!
@@ -59,6 +59,9 @@ class EditPlaceViewController: UIViewController {
         uilpgr.minimumPressDuration = 2
         mapView.addGestureRecognizer(uilpgr)
         
+        // Configure Fields
+        nameText.delegate = self
+        
         // Update View
         nameText.text = place.name
         selectedPoint = place.getPointAnnotation()
@@ -70,6 +73,17 @@ class EditPlaceViewController: UIViewController {
         let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
         let region:MKCoordinateRegion = MKCoordinateRegionMake(selectedPoint.coordinate, span)
         mapView.setRegion(region, animated: true)
+    }
+
+    // Hide keyboard feature
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    // Hide keyboard feature
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 
     // Long press gesture handler

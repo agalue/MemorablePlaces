@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreData
 
-class AddPlaceViewController: UIViewController, CLLocationManagerDelegate {
+class AddPlaceViewController: UIViewController, UITextFieldDelegate, CLLocationManagerDelegate {
 
     @IBOutlet weak var nameText: UITextField!
     @IBOutlet weak var mapView: MKMapView!
@@ -67,10 +67,24 @@ class AddPlaceViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
+        // Configure Fields
+        nameText.delegate = self
+
         // Configure long press gesture
         let uilpgr = UILongPressGestureRecognizer(target: self, action: "action:") // The colon is for receiving the gesture recognizer object
         uilpgr.minimumPressDuration = 2
         mapView.addGestureRecognizer(uilpgr)
+    }
+
+    // Hide keyboard feature
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    // Hide keyboard feature
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 
     // Long press gesture handler
