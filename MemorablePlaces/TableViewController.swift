@@ -150,10 +150,8 @@ class TableViewController: UITableViewController, NSFetchedResultsControllerDele
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "segueAddPlaceViewController" {
-            if let navigationController = segue.destinationViewController as? UINavigationController {
-                if let viewController = navigationController.topViewController as? AddPlaceViewController {
-                    viewController.managedObjectContext = self.managedObjectContext
-                }
+            if let viewController = segue.destinationViewController as? AddPlaceViewController {
+                viewController.managedObjectContext = self.managedObjectContext
             }
         }
         if segue.identifier == "segueEditPlaceViewController" {

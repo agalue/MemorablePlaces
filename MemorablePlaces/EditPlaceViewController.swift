@@ -18,11 +18,7 @@ class EditPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMa
     var managedObjectContext: NSManagedObjectContext!
     var place: Place!
     var locationManager = CLLocationManager()
-    var selectedPoint: MKPointAnnotation!
-    
-    @IBAction func cancel(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
-    }
+    var selectedPoint: MKPointAnnotation!    
     
     @IBAction func save(sender: AnyObject) {
         let name = nameText.text
@@ -42,7 +38,7 @@ class EditPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMa
                 try place.managedObjectContext?.save()
                 
                 // Dismiss View Controller
-                dismissViewControllerAnimated(true, completion: nil)
+                navigationController?.popViewControllerAnimated(true)
             } catch {
                 let saveError = error as NSError
                 print("\(saveError), \(saveError.userInfo)")

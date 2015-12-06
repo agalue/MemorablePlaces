@@ -18,10 +18,6 @@ class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     var managedObjectContext: NSManagedObjectContext!
     var locationManager = CLLocationManager()
     var selectedPoint: MKPointAnnotation!
-
-    @IBAction func cancel(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
     
     @IBAction func save(sender: AnyObject) {
         let name = nameText.text
@@ -47,7 +43,7 @@ class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMan
                 try record.managedObjectContext?.save()
                 
                 // Dismiss View Controller
-                dismissViewControllerAnimated(true, completion: nil)
+                navigationController?.popViewControllerAnimated(true)
             } catch {
                 let saveError = error as NSError
                 print("\(saveError), \(saveError.userInfo)")
@@ -127,6 +123,7 @@ class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         let location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
         let region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
         self.mapView.setRegion(region, animated: true)
+        self.locationManager.stopUpdatingLocation()
     }
 
     private func showAlertWithTitle(title: String, message: String, cancelButtonTitle: String) {

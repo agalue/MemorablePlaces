@@ -46,18 +46,6 @@ class MapViewController: UIViewController {
         } catch {
             print("\(error)")
         }
-    }
-    
-    // MARK: - Navigation
-
-    // TODO I'm not sure why I have to do this, otherwise I can't go back to the table view.
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        if let viewController = segue.destinationViewController as? TableViewController {
-            viewController.managedObjectContext = self.managedObjectContext
-        }
-    }
+    }    
 
 }
