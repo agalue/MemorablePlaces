@@ -74,9 +74,13 @@ class EditPlaceViewController: UIViewController {
 
     // Long press gesture handler
     func action(gestureRecognizer:UIGestureRecognizer) {
-        let name = nameText.text
+        // Be sure to react only on the first long press
+        if gestureRecognizer.state != UIGestureRecognizerState.Began {
+            return
+        }
         
         // Warn if the name is empty.
+        let name = nameText.text
         if let isEmpty = name?.isEmpty where isEmpty == true {
             showAlertWithTitle("Warning", message: "Your place needs a name. Pick a name and then the location.", cancelButtonTitle: "OK")
             return
