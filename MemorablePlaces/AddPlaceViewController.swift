@@ -79,10 +79,6 @@ class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         mapView.addGestureRecognizer(uilpgr)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
     // Long press gesture handler
     func action(gestureRecognizer:UIGestureRecognizer) {
         let name = nameText.text

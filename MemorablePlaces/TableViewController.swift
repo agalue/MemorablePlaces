@@ -161,7 +161,13 @@ class TableViewController: UITableViewController, NSFetchedResultsControllerDele
         }
         if segue.identifier == "segueEditPlaceViewController" {
             if let viewController = segue.destinationViewController as? EditPlaceViewController {
-                viewController.managedObjectContext = self.managedObjectContext
+                if let indexPath = tableView.indexPathForSelectedRow {
+                    // Fetch Record
+                    let record = fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject
+                    // Configure View Controller
+                    viewController.record = record
+                    viewController.managedObjectContext = self.managedObjectContext
+                }
             }
         }
         if segue.identifier == "segueMapViewController" {
