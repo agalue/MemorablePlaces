@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreData
 
-class EditPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class EditPlaceViewController: UIViewController {
 
     @IBOutlet weak var nameText: UITextField!
     @IBOutlet weak var mapView: MKMapView!
@@ -29,11 +29,11 @@ class EditPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMa
         }
         
         if let isEmpty = name?.isEmpty where isEmpty == false {
-            // Populate Record
+            // Update Place
             place.updateFromPointAnnotation(selectedPoint)
             
             do {
-                // Save Record
+                // Save Place
                 try place.managedObjectContext?.save()
                 
                 // Dismiss View Controller
@@ -65,8 +65,8 @@ class EditPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMa
         mapView.addAnnotation(selectedPoint)
         
         // Set Map Region
-        let latDelta:CLLocationDegrees = 0.005
-        let lonDelta:CLLocationDegrees = 0.005
+        let latDelta:CLLocationDegrees = 0.01
+        let lonDelta:CLLocationDegrees = 0.01
         let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
         let region:MKCoordinateRegion = MKCoordinateRegionMake(selectedPoint.coordinate, span)
         mapView.setRegion(region, animated: true)

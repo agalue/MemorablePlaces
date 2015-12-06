@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreData
 
-class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class AddPlaceViewController: UIViewController, CLLocationManagerDelegate {
 
     @IBOutlet weak var nameText: UITextField!
     @IBOutlet weak var mapView: MKMapView!
@@ -32,10 +32,10 @@ class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMan
             // Create Entity
             let entity = NSEntityDescription.entityForName("Place", inManagedObjectContext: self.managedObjectContext)
             
-            // Initialize Record
+            // Initialize Place
             let record = Place(entity: entity!, insertIntoManagedObjectContext: self.managedObjectContext)
             
-            // Populate Record
+            // Update Place
             record.updateFromPointAnnotation(selectedPoint)
 
             do {
@@ -116,8 +116,8 @@ class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation: CLLocation = locations[0]
         
-        let latDelta:CLLocationDegrees = 0.005
-        let lonDelta:CLLocationDegrees = 0.005
+        let latDelta:CLLocationDegrees = 0.01
+        let lonDelta:CLLocationDegrees = 0.01
         let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
         let region:MKCoordinateRegion = MKCoordinateRegionMake(userLocation.coordinate, span)
         self.mapView.setRegion(region, animated: true)
