@@ -37,13 +37,13 @@ class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMan
             let entity = NSEntityDescription.entityForName("Place", inManagedObjectContext: self.managedObjectContext)
             
             // Initialize Record
-            let record = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: self.managedObjectContext)
+            let record = Place(entity: entity!, insertIntoManagedObjectContext: self.managedObjectContext)
             
             // Populate Record
-            record.setValue(name, forKey: "name")
-            record.setValue(selectedPoint.coordinate.latitude, forKey: "latitude")
-            record.setValue(selectedPoint.coordinate.longitude, forKey: "longitude")
-            record.setValue(selectedPoint.subtitle, forKey: "address")
+            record.name = name!
+            record.latitude = selectedPoint.coordinate.latitude
+            record.longitude = selectedPoint.coordinate.longitude
+            record.address = selectedPoint.subtitle!
 
             do {
                 // Save Record
@@ -102,7 +102,7 @@ class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         selectedPoint = MKPointAnnotation()
         selectedPoint.coordinate = coordinate
         selectedPoint.title = name!
-        selectedPoint.subtitle = "Calculating address..."
+        selectedPoint.subtitle = "Unknown"
         mapView.addAnnotation(selectedPoint)
         
         // Retrieve the physical address

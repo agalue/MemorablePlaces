@@ -16,7 +16,7 @@ class EditPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMa
     @IBOutlet weak var mapView: MKMapView!
     
     var managedObjectContext: NSManagedObjectContext!
-    var record: NSManagedObject!
+    var place: Place!
     var locationManager = CLLocationManager()
     var selectedPoint: MKPointAnnotation!
     
@@ -35,14 +35,14 @@ class EditPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMa
         
         if let isEmpty = name?.isEmpty where isEmpty == false {
             // Populate Record
-            record.setValue(name, forKey: "name")
-            record.setValue(selectedPoint.coordinate.latitude, forKey: "latitude")
-            record.setValue(selectedPoint.coordinate.longitude, forKey: "longitude")
-            record.setValue(selectedPoint.subtitle, forKey: "address")
+            place.name = name!
+            place.latitude = selectedPoint.coordinate.latitude
+            place.longitude = selectedPoint.coordinate.longitude
+            place.address = selectedPoint.subtitle!
             
             do {
                 // Save Record
-                try record.managedObjectContext?.save()
+                try place.managedObjectContext?.save()
                 
                 // Dismiss View Controller
                 dismissViewControllerAnimated(true, completion: nil)
@@ -72,22 +72,56 @@ class EditPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMa
         let uilpgr = UILongPressGestureRecognizer(target: self, action: "action:") // The colon is for receiving the gesture recognizer object
         uilpgr.minimumPressDuration = 2
         mapView.addGestureRecognizer(uilpgr)
-
-        // Get the information from the current place
-        let name = record.valueForKey("name") as! String
-        let latitude = record.valueForKey("latitude") as! Double
-        let longitude = record.valueForKey("longitude") as! Double
-        let address = record.valueForKey("address") as! String
         
         // Add the current place on the map
         selectedPoint = MKPointAnnotation()
-        selectedPoint.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        selectedPoint.title = name
-        selectedPoint.subtitle = address
+        selectedPoint.coordinate = CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude)
+        selectedPoint.title = place.name
+        selectedPoint.subtitle = place.address
         mapView.addAnnotation(selectedPoint)
         
         // Update label
-        nameText.text = name
+        nameText.text = place.name
+    }
+
+    // Long press gesture handler
+    func action(gestureRecognizer:UIGestureRecognizer) {
+        let name = nameText.text
+        
+        // Warn if the name is empty.
+        if let isEmpty = name?.isEmpty where isEmpty == true {
+            showAlertWithTitle("Warning", message: "Your place needs a name. Pick a name and then the location.", cancelButtonTitle: "OK")
+            return
+        }
+        
+        // Grab map coordinates from touch point
+        let touchPoint = gestureRecognizer.locationInView(self.mapView)
+        let coordinate: CLLocationCoordinate2D = mapView.convertPoint(touchPoint, toCoordinateFromView: self.mapView)
+        
+        // Remove previous selected point if any
+        if (selectedPoint != nil) {
+            mapView.removeAnnotation(selectedPoint)
+        }
+        
+        // Update selected point
+        selectedPoint = MKPointAnnotation()
+        selectedPoint.coordinate = coordinate
+        selectedPoint.title = name!
+        selectedPoint.subtitle = "Unknown"
+        mapView.addAnnotation(selectedPoint)
+        
+        // Retrieve the physical address
+        let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        CLGeocoder().reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+            if let e = error {
+                print("Reverse geocoder failed with error " + e.localizedDescription)
+                return
+            }
+            if let placemark = placemarks?[0] {
+                let addressFields = placemark.addressDictionary!["FormattedAddressLines"] as! [String]
+                self.selectedPoint.subtitle = addressFields.joinWithSeparator(", ")
+            }
+        })
     }
 
     private func showAlertWithTitle(title: String, message: String, cancelButtonTitle: String) {

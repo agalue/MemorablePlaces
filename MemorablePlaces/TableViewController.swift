@@ -163,9 +163,9 @@ class TableViewController: UITableViewController, NSFetchedResultsControllerDele
             if let viewController = segue.destinationViewController as? EditPlaceViewController {
                 if let indexPath = tableView.indexPathForSelectedRow {
                     // Fetch Record
-                    let record = fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject
+                    let place = fetchedResultsController.objectAtIndexPath(indexPath) as! Place
                     // Configure View Controller
-                    viewController.record = record
+                    viewController.place = place
                     viewController.managedObjectContext = self.managedObjectContext
                 }
             }

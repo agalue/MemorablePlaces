@@ -26,16 +26,11 @@ class MapViewController: UIViewController {
             let places = try managedObjectContext.executeFetchRequest(request)
             
             // Add a point on the map for each place
-            for place in places as! [NSManagedObject] {
-                let name = place.valueForKey("name") as! String
-                let latitude = place.valueForKey("latitude") as! Double
-                let longitude = place.valueForKey("longitude") as! Double
-                let address = place.valueForKey("address") as! String
-                
+            for place in places as! [Place] {
                 let point = MKPointAnnotation()
-                point.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                point.title = name
-                point.subtitle = address
+                point.coordinate = CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude)
+                point.title = place.name
+                point.subtitle = place.address
                 mapView.addAnnotation(point)
             }
         } catch {
