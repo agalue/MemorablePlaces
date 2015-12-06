@@ -17,6 +17,8 @@ class TableViewController: UITableViewController, NSFetchedResultsControllerDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Initialize Fetched Results Controller
         fetchedResultsController = NSFetchedResultsController(fetchRequest: allPlacesFetchRequest(), managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController.delegate = self
         do {
@@ -32,6 +34,7 @@ class TableViewController: UITableViewController, NSFetchedResultsControllerDele
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
+    // Initialize Fetch Request
     func allPlacesFetchRequest() -> NSFetchRequest {
         let fetchRequest = NSFetchRequest(entityName: "Place")
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
@@ -85,12 +88,13 @@ class TableViewController: UITableViewController, NSFetchedResultsControllerDele
     
     // Override to support rearranging the table view.
     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
+        // TODO I have to investigate how to do this with Core Data and Fetch Request Order
     }
     
     // Override to support conditional rearranging of the table view.
     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.
-        return true
+        return false
     }
     
     // MARK: - NSFetchedResultsController Delegate Functions
@@ -153,6 +157,16 @@ class TableViewController: UITableViewController, NSFetchedResultsControllerDele
                 if let viewController = navigationController.topViewController as? AddPlaceViewController {
                     viewController.managedObjectContext = self.managedObjectContext
                 }
+            }
+        }
+        if segue.identifier == "segueEditPlaceViewController" {
+            if let viewController = segue.destinationViewController as? EditPlaceViewController {
+                viewController.managedObjectContext = self.managedObjectContext
+            }
+        }
+        if segue.identifier == "segueMapViewController" {
+            if let viewController = segue.destinationViewController as? MapViewController {
+                viewController.managedObjectContext = self.managedObjectContext
             }
         }
     }

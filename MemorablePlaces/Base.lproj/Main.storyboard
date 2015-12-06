@@ -6,6 +6,47 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--Map View-->
+        <scene sceneID="cVL-Wz-jmO">
+            <objects>
+                <viewController id="ReY-MQ-dVE" customClass="MapViewController" customModule="MemorablePlaces" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="E6c-F6-p8V"/>
+                        <viewControllerLayoutGuide type="bottom" id="NwI-Gb-ovU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zN8-V9-xEP">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="XCf-57-nEj">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <animations/>
+                            </mapView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="XCf-57-nEj" firstAttribute="leading" secondItem="zN8-V9-xEP" secondAttribute="leadingMargin" constant="-20" id="TuK-K4-Joj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="XCf-57-nEj" secondAttribute="trailing" constant="-20" id="dKh-Kn-6oB"/>
+                            <constraint firstItem="NwI-Gb-ovU" firstAttribute="top" secondItem="XCf-57-nEj" secondAttribute="bottom" id="iZL-Fl-45Q"/>
+                            <constraint firstItem="XCf-57-nEj" firstAttribute="top" secondItem="E6c-F6-p8V" secondAttribute="bottom" id="tZX-4R-mPd"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Map View" id="cqG-Hf-ZvN">
+                        <barButtonItem key="leftBarButtonItem" systemItem="rewind" id="BHG-bW-QZK">
+                            <connections>
+                                <segue destination="W4t-UN-cuZ" kind="show" id="8cG-tl-KXI"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="XCf-57-nEj" id="MHN-ai-e6W"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IYN-2P-ki2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1605" y="-1095"/>
+        </scene>
         <!--Places-->
         <scene sceneID="A2k-hE-Q1I">
             <objects>
@@ -42,6 +83,7 @@
                                 <animations/>
                                 <connections>
                                     <outlet property="nameLabel" destination="Giw-Jn-Nji" id="7Sc-03-Qcx"/>
+                                    <segue destination="495-Jz-F4V" kind="show" identifier="segueEditPlaceViewController" id="xSm-S1-vPZ"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -52,6 +94,11 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Places" id="tZH-l3-cO2">
                         <barButtonItem key="backBarButtonItem" title="Back" id="IJM-5H-DmF"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="action" id="aSD-h6-JfW">
+                            <connections>
+                                <segue destination="ReY-MQ-dVE" kind="show" identifier="segueMapViewController" id="LvX-rh-04G"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="yOo-nc-xys" userLabel="Add">
                             <connections>
                                 <segue destination="O8F-dB-LFZ" kind="presentation" identifier="segueAddPlaceViewController" id="dQh-9f-Lop"/>
@@ -64,7 +111,66 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ue-LZ-f8M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="639" y="23"/>
+            <point key="canvasLocation" x="635" y="-325"/>
+        </scene>
+        <!--Edit Place-->
+        <scene sceneID="LIy-o3-VOY">
+            <objects>
+                <viewController id="495-Jz-F4V" customClass="EditPlaceViewController" customModule="MemorablePlaces" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GLw-HZ-ZsO"/>
+                        <viewControllerLayoutGuide type="bottom" id="MP5-ln-BP3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="eyE-GJ-Ocm">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name of the Place" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7jt-DU-tfL">
+                                <rect key="frame" x="20" y="83" width="560" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="9Dc-W1-Par"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Zvj-PR-Ub5">
+                                <rect key="frame" x="0.0" y="121" width="600" height="479"/>
+                                <animations/>
+                            </mapView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Zvj-PR-Ub5" firstAttribute="leading" secondItem="eyE-GJ-Ocm" secondAttribute="leadingMargin" constant="-20" id="ABy-0i-e7B"/>
+                            <constraint firstItem="7jt-DU-tfL" firstAttribute="trailing" secondItem="eyE-GJ-Ocm" secondAttribute="trailingMargin" id="Fjy-jh-cHK"/>
+                            <constraint firstItem="Zvj-PR-Ub5" firstAttribute="top" secondItem="7jt-DU-tfL" secondAttribute="bottom" constant="8" id="Vxg-Dr-QMa"/>
+                            <constraint firstItem="MP5-ln-BP3" firstAttribute="top" secondItem="Zvj-PR-Ub5" secondAttribute="bottom" id="bP5-eF-io0"/>
+                            <constraint firstItem="7jt-DU-tfL" firstAttribute="top" secondItem="GLw-HZ-ZsO" secondAttribute="bottom" constant="19" id="kZ4-1c-Msh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Zvj-PR-Ub5" secondAttribute="trailing" constant="-20" id="nOE-ky-HCJ"/>
+                            <constraint firstItem="7jt-DU-tfL" firstAttribute="leading" secondItem="eyE-GJ-Ocm" secondAttribute="leadingMargin" id="vFQ-p3-4Ki"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Edit Place" id="Qc6-AC-n7n">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="449-Sm-UC0">
+                            <connections>
+                                <action selector="cancel:" destination="495-Jz-F4V" id="p0o-zi-oAA"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="PFS-jS-pi1">
+                            <connections>
+                                <action selector="save:" destination="495-Jz-F4V" id="z5s-8y-mhP"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="Zvj-PR-Ub5" id="PNr-Io-h2e"/>
+                        <outlet property="nameText" destination="7jt-DU-tfL" id="VSg-6J-Xsh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oFw-OU-CoR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="639" y="459"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Wvq-oU-sMn">
@@ -81,9 +187,9 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ahv-nT-wxc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-181" y="23"/>
+            <point key="canvasLocation" x="-185" y="-325"/>
         </scene>
-        <!--Add View-->
+        <!--Add Place-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="AddPlaceViewController" customModule="MemorablePlaces" customModuleProvider="target" sceneMemberID="viewController">
@@ -121,7 +227,7 @@
                             <constraint firstItem="yXC-Mj-2Bk" firstAttribute="top" secondItem="S6l-rs-Gmo" secondAttribute="bottom" constant="8" id="zRC-t3-YEa"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Add View" id="c01-5t-QWp">
+                    <navigationItem key="navigationItem" title="Add Place" id="c01-5t-QWp">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="vR6-bK-1Kt">
                             <connections>
                                 <action selector="cancel:" destination="BYZ-38-t0r" id="Qza-fT-yM3"/>
@@ -140,7 +246,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2247" y="23"/>
+            <point key="canvasLocation" x="2423" y="-205"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="aRV-8H-iTK">
@@ -159,7 +265,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EUM-iu-GTd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1435" y="23"/>
+            <point key="canvasLocation" x="1605" y="-205"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="8cG-tl-KXI"/>
+    </inferredMetricsTieBreakers>
 </document>

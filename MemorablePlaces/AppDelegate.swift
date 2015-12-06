@@ -25,7 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Configure View Controller
         let viewController = rootNavigationController.topViewController as? TableViewController
-        
         if let vc = viewController {
             vc.managedObjectContext = self.managedObjectContext
         }

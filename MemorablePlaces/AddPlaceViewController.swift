@@ -26,8 +26,8 @@ class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     @IBAction func save(sender: AnyObject) {
         let name = nameText.text
         
+        // Warn the user if there are no selected point on the map
         if selectedPoint == nil {
-            // Show Alert View
             showAlertWithTitle("Warning", message: "Your place needs a coordinate. Long press on the map to select a place.", cancelButtonTitle: "OK")
             return
         }
@@ -55,11 +55,11 @@ class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMan
                 let saveError = error as NSError
                 print("\(saveError), \(saveError.userInfo)")
                 
-                // Show Alert View
+                // Show error to the user
                 showAlertWithTitle("Warning", message: "Your place could not be saved.", cancelButtonTitle: "OK")
             }
         } else {
-            // Show Alert View
+            // Warn the user if there is no name for the place.
             showAlertWithTitle("Warning", message: "Your place needs a name.", cancelButtonTitle: "OK")
         }
     }
@@ -67,11 +67,13 @@ class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Initialize location Manager
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
+        // Configure long press gesture
         let uilpgr = UILongPressGestureRecognizer(target: self, action: "action:") // The colon is for receiving the gesture recognizer object
         uilpgr.minimumPressDuration = 2
         mapView.addGestureRecognizer(uilpgr)
@@ -81,19 +83,33 @@ class AddPlaceViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         super.didReceiveMemoryWarning()
     }
 
+    // Long press gesture handler
     func action(gestureRecognizer:UIGestureRecognizer) {
+        let name = nameText.text
+        
+        // Warn if the name is empty.
+        if let isEmpty = name?.isEmpty where isEmpty == true {
+            showAlertWithTitle("Warning", message: "Your place needs a name. Pick a name and then the location.", cancelButtonTitle: "OK")
+            return
+        }
+        
+        // Grab map coordinates from touch point
         let touchPoint = gestureRecognizer.locationInView(self.mapView)
         let coordinate: CLLocationCoordinate2D = mapView.convertPoint(touchPoint, toCoordinateFromView: self.mapView)
         
+        // Remove previous selected point if any
         if (selectedPoint != nil) {
             mapView.removeAnnotation(selectedPoint)
         }
+        
+        // Update selected point
         selectedPoint = MKPointAnnotation()
         selectedPoint.coordinate = coordinate
-        selectedPoint.title = "Your Place!"
+        selectedPoint.title = name!
         selectedPoint.subtitle = "Calculating address..."
         mapView.addAnnotation(selectedPoint)
         
+        // Retrieve the physical address
         let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         CLGeocoder().reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
             if let e = error {
