@@ -138,12 +138,9 @@ class TableViewController: UITableViewController, NSFetchedResultsControllerDele
     
     func configureCell(cell: PlaceViewCell, atIndexPath indexPath: NSIndexPath) {
         // Fetch Record
-        let record = fetchedResultsController.objectAtIndexPath(indexPath)
-        
+        let place = fetchedResultsController.objectAtIndexPath(indexPath) as! Place        
         // Update Cell
-        if let name = record.valueForKey("name") as? String {
-            cell.nameLabel.text = name
-        }
+        cell.update(place)
     }
 
     // MARK: - Navigation
