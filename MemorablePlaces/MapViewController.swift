@@ -37,10 +37,12 @@ class MapViewController: UIViewController {
             }
                         
             // Set map region
-            var region = MKCoordinateRegionForMapRect(rect)
-            region.span.longitudeDelta *= 2; // Margin
-            region.span.latitudeDelta *= 2; // Margin
-            mapView.setRegion(mapView.regionThatFits(region), animated: true)
+            if !places.isEmpty {
+                var region = MKCoordinateRegionForMapRect(rect)
+                region.span.longitudeDelta *= 2; // Margin
+                region.span.latitudeDelta *= 2; // Margin
+                mapView.setRegion(mapView.regionThatFits(region), animated: true)
+            }
         } catch {
             print("\(error)")
         }
