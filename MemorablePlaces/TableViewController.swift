@@ -118,8 +118,6 @@ class TableViewController: UITableViewController, NSFetchedResultsControllerDele
         case .Update:
             if let indexPath = indexPath {
                 print("Updating row at \(indexPath.row)")
-                let cell = tableView.cellForRowAtIndexPath(indexPath) as! PlaceViewCell
-                configureCell(cell, atIndexPath: indexPath)
                 tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             }
             break;
@@ -129,11 +127,18 @@ class TableViewController: UITableViewController, NSFetchedResultsControllerDele
                 tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
             }
             break;
+            
         case .Move:
             if let indexPath = indexPath {
                 if let newIndexPath = newIndexPath {
-                    print("Moving row from \(indexPath.row) to \(newIndexPath.row)")
-                    tableView.moveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)
+                    if (indexPath.row == newIndexPath.row) {
+                        print("Move/Updating row \(newIndexPath.row)")
+                        tableView.reloadRowsAtIndexPaths([newIndexPath], withRowAnimation: .Fade)
+                    } else {
+                        print("Moving row from \(indexPath.row) to \(newIndexPath.row)")
+                        tableView.moveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)
+                        tableView.reloadRowsAtIndexPaths([indexPath, newIndexPath], withRowAnimation: .Fade)
+                    }
                 }
             }
             break;
